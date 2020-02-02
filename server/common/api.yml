@@ -26,19 +26,92 @@ definitions:
       name:
         type: string
         example: no_stress
+  game:
+    required:
+      - firstPlayer
+      - secondPlayer
+      - firstPlayerScore
+      - secondPlayerScore
+    properties:
+      firstPlayer:
+        type: string
+        minLength: 1
+        pattern: "^[a-zA-Z0-9- ]+$"
+        example: goku
+      secondPlayer:
+        type: string
+        minLength: 1
+        pattern: "^[a-zA-Z0-9- ]+$"
+        example: roshi
+      firstPlayerScore:
+        type: integer
+        minLength: 1
+        minimum: 0
+        maximum: 99999
+        example: 5
+      secondPlayerScore:
+        type: integer
+        minLength: 1
+        minimum: 0
+        maximum: 99999
+        example: 5
+
 
 paths:
-  /examples:
-    get:
-      tags:
-        - Examples
-      description: Fetch all examples
-      responses:
-        200:
-          description: Returns all examples
+  /games:
     post:
-      tags:
-        - Examples
+      description: Create a new game
+      parameters:
+        - name: game
+          in: body
+          description: The game to add to the tournament
+          required: true
+          schema:
+            $ref: "#/definitions/game"
+      responses:
+        201:
+          description: Returns the newly-added game
+          schema:
+            properties:
+              id:
+                # Returned by GET, not used in POST/PUT/PATCH
+                type: integer 
+                format: int32
+                description: The auto-generated game ID
+                readOnly: true
+              date:
+                type: string
+                format: 'date'
+                description: The auto-generated date when game was created
+              firstPlayer:
+                type: string
+                minLength: 1
+                pattern: "^[a-zA-Z0-9- ]+$"
+                example: goku
+              secondPlayer:
+                type: string
+                minLength: 1
+                pattern: "^[a-zA-Z0-9- ]+$"
+                example: roshi
+              firstPlayerScore:
+                type: integer
+                minLength: 1
+                minimum: 0
+                maximum: 99999
+                example: 5
+              secondPlayerScore:
+                type: integer
+                minLength: 1
+                minimum: 0
+                maximum: 99999
+                example: 5
+          headers:
+            Location:
+              type: string
+              description: The URL of the newly-added game
+
+  /examples:
+    post:
       description: Create a new example
       parameters:
         - name: example
@@ -50,27 +123,3 @@ paths:
       responses:
         200:
           description: Returns all examples
-
-  /examples/{id}:
-    get:
-      tags:
-        - Examples
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The id of the example to retrieve
-          type: integer
-      responses:
-        200:
-          description: Return the example with the specified id
-        404:
-          description: Example not found
-
-  /spec:
-    get:
-      tags:
-        - Specification
-      responses:
-        200:
-          description: Return the API specification
