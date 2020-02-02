@@ -79,10 +79,7 @@ paths:
                 format: int32
                 description: The auto-generated game ID
                 readOnly: true
-              date:
-                type: string
-                format: 'date'
-                description: The auto-generated date when game was created
+                example: 65
               firstPlayer:
                 type: string
                 minLength: 1
@@ -105,6 +102,10 @@ paths:
                 minimum: 0
                 maximum: 99999
                 example: 5
+              date:
+                type: string
+                format: 'date'
+                description: The auto-generated date when game was created
           headers:
             Location:
               type: string
