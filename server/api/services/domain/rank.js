@@ -1,5 +1,5 @@
 class Rank {
-  static getRankByIdSQL() {
+  static getAllRanksSQL() {
     let sql = `select name, won, lost, tied, (3*won + 1*tied) as points \
                 from ( \
                   select p.name, count(distinct g1.id) as 'won',count(distinct g2.id) as 'lost', count(distinct g3.id) as 'tied' \

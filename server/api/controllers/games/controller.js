@@ -16,12 +16,5 @@ export class Controller {
   all(req, res) {
     GamesService.all().then(r => res.json(r));
   }
-
-  byId(req, res) {
-    GamesService.byId(req.params.id).then(r => {
-      if (r) res.json(r);
-      else res.status(404).end();
-    });
-  }
 }
 export default new Controller();

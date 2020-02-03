@@ -146,6 +146,50 @@ paths:
             Location:
               type: string
               description: The URL of the request
+    get:
+      description: Returns all games with names and scores
+      operationId: findAllGames
+      responses:
+        default:
+          description: Returns the matching games
+          schema:
+            properties:
+              id:
+                type: integer 
+                format: int32
+                description: The auto-generated rank ID
+                readOnly: true
+                example: 65
+              player1name:
+                type: string
+                minLength: 1
+                pattern: "^[a-zA-Z0-9- ]+$"
+                example: goku
+              player2name:
+                type: string
+                minLength: 1
+                pattern: "^[a-zA-Z0-9- ]+$"
+                example: goku
+              player1Score:
+                type: integer
+                minLength: 1
+                minimum: 0
+                maximum: 99999
+                example: 5
+              player2Score:
+                type: integer
+                minLength: 1
+                minimum: 0
+                maximum: 99999
+                example: 5
+              date:
+                type: string
+                format: 'date'
+                description: The auto-generated date when game was created
+          headers:
+            last-modified:
+              type: string
+              description: The URL of the newly-added game
 
   /examples:
     post:

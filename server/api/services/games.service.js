@@ -8,11 +8,8 @@ class GamesService {
   }
 
   all() {
-    return Promise.resolve(this._data);
-  }
-
-  byId(id) {
-    return Promise.resolve(this._data[id]);
+    l.info(`${this.constructor.name}.all()`);
+    return db.getAll();
   }
 }
 

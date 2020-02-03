@@ -11,11 +11,8 @@ class RanksDatabase {
   getAll() {
     const dbQueryPromise = util.promisify(db.query);
     return Promise.resolve(
-      dbQueryPromise(Rank.getRankByIdSQL())
+      dbQueryPromise(Rank.getAllRanksSQL())
         .then(Ranks => {
-          l.info(
-            `${this.constructor.name}.dbQueryPromise().getRankByIdSQL: ${Ranks}`
-          );
           return Ranks;
         })
         .catch(e =>

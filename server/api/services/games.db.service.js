@@ -6,6 +6,21 @@ import util from 'util';
 class GamesDatabase {
   constructor() {
     this._data = [];
+    this._dbQueryPromise = util.promisify(db.query);
+  }
+
+  getAll() {
+    return Promise.resolve(
+      this._dbQueryPromise(Game.getAllGamesSQL())
+        .then(Games => {
+          return Games;
+        })
+        .catch(e =>
+          l.info(
+            `${this.constructor.name}.dbQueryPromise().getAllGamesSQL: ${e}`
+          )
+        )
+    );
   }
 
   insert(data) {
@@ -26,9 +41,8 @@ class GamesDatabase {
       });
     };
     */
-    const dbQueryPromise = util.promisify(db.query);
     return Promise.resolve(
-      dbQueryPromise(game.getAddGameSQL())
+      this._dbQueryPromise(game.getAddGameSQL())
         .then(newGame => {
           this._data.push(newGame[0]);
           return newGame[0];
