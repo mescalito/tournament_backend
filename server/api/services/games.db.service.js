@@ -16,7 +16,7 @@ class GamesDatabase {
       data.secondPlayerScore
     );
 
-    /*
+    /* promisify db.query sync function
     let dbQueryPromise = (...args) => {
       return new Promise((resolve, reject) => {
         db.query(...args, (err, newGame) => {
@@ -30,19 +30,8 @@ class GamesDatabase {
     return Promise.resolve(
       dbQueryPromise(game.getAddGameSQL())
         .then(newGame => {
-          return newGame.insertId;
-        })
-        .then(insertId => {
-          return dbQueryPromise(Game.getGameByIdSQL(insertId))
-            .then(newGameData => {
-              this._data.push(newGameData[0]);
-              return newGameData[0];
-            })
-            .catch(e =>
-              l.info(
-                `${this.constructor.name}.dbQueryPromise().getGameByIdSQL: ${e}`
-              )
-            );
+          this._data.push(newGame[0]);
+          return newGame[0];
         })
         .catch(e =>
           l.info(

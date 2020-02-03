@@ -10,7 +10,7 @@ export class Controller {
           .location(`/api/v1/games/${r.id}`)
           .json(r);
       })
-      .catch(e => l.info(`${this.constructor.name}.create: ${e}`));
+      .catch(e => l.info(`Controller.create: ${e}`));
   }
 
   all(req, res) {
